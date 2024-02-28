@@ -1,0 +1,21 @@
+<div class="game-container">
+    <div class="cron">
+        <button (click)="start()" class="play">
+            Play
+        </button>
+        <h1 class="cronos">
+            {{ seconds }}
+        </h1>
+        <button (click)="reset()" class="skip">
+            Skip
+        </button>
+    </div>
+    <div class="answers">
+        <input (input)="obtainText($event.target)" type="text" class="answer">
+        <ul>
+            <h3 *ngFor="let item of correctCountries" class="output">
+                {{ item }}
+            </h3>
+        </ul>
+    </div>
+</div>
