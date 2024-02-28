@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-
+import answersData from './data/answers.json'
 import countriesData from './data/countries.json'
 import { CommonModule } from '@angular/common';
 
@@ -22,10 +22,13 @@ export class GameComponent implements OnInit, OnChanges {
   seconds:number = 30;
   con:any;
   data:Continentes = countriesData;
-  correctCountries:string[] = []
+  answers:Continentes = answersData;
+  correctCountries:string[] = [];
+  isStarted:boolean = false;
 
   start = ():void => {
     this.pause();
+    this.isStarted = true;
     this.con = setInterval(() => {
       this.timer()
     },1000);
@@ -48,12 +51,17 @@ export class GameComponent implements OnInit, OnChanges {
   }
 
   obtainText = (e:any):void => {
-    for (let continent in this.data) {
-      if (e.value.startsWith(this.alphabet[0]) && this.data[continent].includes(e.value)) {
-        this.correctCountries.push(e.value)
-        e.value = ''
-        console.log(this.correctCountries)
+    if (this.isStarted) {
+      let word = e.value
+      word = word.normalize('NFD').charAt(0).toUpperCase() + word.slice(1);
+      for (let continent in this.answers) {
+        if (word.startsWith(this.alphabet[0]) && this.answers[continent].includes(word) && !this.correctCountries.includes(e.value)) {
+          this.correctCountries.push(this.data[continent][this.answers[continent].indexOf(word)])
+          e.value = ''
+        }
       }
+    } else {
+      this.start()
     }
   }
 
