@@ -25,10 +25,22 @@ export class GameComponent implements OnInit, OnChanges {
   answers:Continentes = answersData;
   correctCountries:string[] = [];
   isStarted:boolean = false;
+  points:number = 0;
+  statusVisibility:boolean = false;
+  fromAfrica:number = 0;
+  fromAmerica:number = 0;
+  fromAsia:number = 0;
+  fromEurope:number = 0;
+  fromOceania:number = 0;
+
+  closeTab = ():void => {
+    this.statusVisibility = false;
+  }
 
   start = ():void => {
     this.pause();
     this.isStarted = true;
+    this.statusVisibility = false;
     this.con = setInterval(() => {
       this.timer()
     },1000);
@@ -38,9 +50,23 @@ export class GameComponent implements OnInit, OnChanges {
     clearInterval(this.con);
   }
 
+  begin = ():void => {
+    this.seconds = 30
+    this.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    this.isStarted = false;
+    this.pause()
+  }
+
   reset = ():void => {
-    this.seconds += 30;
-    this.alphabet.shift()
+    if (this.isStarted === true) {
+      this.seconds += 30;
+      if (this.alphabet.length > 1){
+        this.alphabet.shift()
+      } else {
+        this.statusVisibility = true;
+        this.begin()
+      }
+    }
   }
 
   timer = ():void => {
@@ -53,11 +79,37 @@ export class GameComponent implements OnInit, OnChanges {
   obtainText = (e:any):void => {
     if (this.isStarted) {
       let word = e.value
-      word = word.normalize('NFD').charAt(0).toUpperCase() + word.slice(1);
+      word = word.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .split(" ")
+        .map((palavra:string, index:number) => index === 0 || palavra.length > 2 ? palavra.charAt(0).toUpperCase() + palavra.slice(1) : palavra)
+        .join(" ")
+        .split("-")
+        .map((palavra:string, index:number) => index === 0 || palavra.length > 2 ? palavra.charAt(0).toUpperCase() + palavra.slice(1) : palavra)
+        .join("-");
       for (let continent in this.answers) {
-        if (word.startsWith(this.alphabet[0]) && this.answers[continent].includes(word) && !this.correctCountries.includes(e.value)) {
+        if (word.startsWith(this.alphabet[0]) && this.answers[continent].includes(word) && !this.correctCountries.includes(this.data[continent][this.answers[continent].indexOf(word)])) {
           this.correctCountries.push(this.data[continent][this.answers[continent].indexOf(word)])
           e.value = ''
+          this.points += 1
+          switch (continent) {
+            case "Africa":
+              this.fromAfrica += 1
+              break
+            case "America":
+              this.fromAmerica += 1
+              break
+            case "Asia":
+              this.fromAsia += 1
+              break
+            case "Europa":
+              this.fromEurope += 1
+              break
+            case "Oceania":
+              this.fromOceania += 1
+              break
+          }
         }
       }
     } else {

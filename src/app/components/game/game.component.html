@@ -1,21 +1,31 @@
 <div class="game-container">
+    <h1 class="title">Country Game</h1>
     <div class="cron">
         <button (click)="start()" class="play">
-            Play
+            <i class="bi bi-play-fill"></i>
         </button>
         <h1 class="cronos">
             {{ seconds }}
         </h1>
         <button (click)="reset()" class="skip">
-            Skip
+            <i class="bi bi-skip-forward-fill"></i>
         </button>
     </div>
     <div class="answers">
-        <input (input)="obtainText($event.target)" type="text" class="answer">
-        <ul>
-            <h3 *ngFor="let item of correctCountries" class="output">
-                {{ item }}
-            </h3>
-        </ul>
+        <input placeholder="Países que começam com {{ this.alphabet[0] }}" (input)="obtainText($event.target)" type="text" class="answer">
+        <h3 *ngFor="let item of correctCountries" class="output">
+            {{ item }}
+        </h3>
+    </div>
+    <div *ngIf="statusVisibility" class="points">
+        <h4>Você fez</h4>
+        <h1>{{ points }}</h1>
+        <h4>pontos!</h4>
+        <h5>África: {{ fromAfrica }}</h5>
+        <h5>América: {{ fromAmerica }}</h5>
+        <h5>Ásia: {{ fromAsia }}</h5>
+        <h5>Europa: {{ fromEurope }}</h5>
+        <h5>Oceania: {{ fromOceania }}</h5>
+        <div (click)="closeTab()">Fechar</div>
     </div>
 </div>
