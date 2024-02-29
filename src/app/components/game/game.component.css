@@ -27,10 +27,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 4px 4px 4px #07080841;
+    cursor: pointer;
 }
 
 .play:hover {
     background-color: #52AA5E;
+    box-shadow: 2px 2px 2px #07080841;
 }
 
 .skip {
@@ -44,10 +47,13 @@
     border: none;
     outline: none;
     transition: all ease-in-out 0.2s;
+    box-shadow: 4px 4px 4px #07080841;
+    cursor: pointer;
 }
 
 .skip:hover {
     background-color: #FF7E6B;
+    box-shadow: 2px 2px 2px #07080841;
 }
 
 .cronos {
@@ -90,6 +96,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: 4px 4px 4px #07080841;
 }
 
 .output {
@@ -104,6 +111,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 4px 4px 4px #07080841;
 }
 
 .points {
@@ -117,6 +125,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 2rem;
+    box-shadow: 4px 4px 8px #07080841;
 }
 
 .points h4 {
@@ -127,9 +136,9 @@
 }
 
 .points h5 {
-    margin: 10px;
+    margin: 8px;
     background-color: transparent;
-    color: #171D1C;
+    color: #6E7E85;
 }
 
 .points h1 {
@@ -152,8 +161,12 @@
     border-radius: 8rem;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
+    box-shadow: 2px 2px 2px #07080841;
+    transition: all ease-in-out 0.4s;
+    cursor: pointer;
 }
 
-.points button:hover {
+.points div:hover {
     background-color: #52AA5E;
+    box-shadow: 4px 4px 6px #07080841;
 }
