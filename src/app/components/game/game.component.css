@@ -119,7 +119,7 @@
     height: 35rem;
     background-color: #EAF2EF;
     position: absolute;
-    margin-top: 20rem;
+    top: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
