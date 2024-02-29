@@ -75,7 +75,7 @@ export class GameComponent implements OnInit, OnChanges {
       if (this.alphabet.length > 1){
         this.alphabet.shift()
       } else {
-        this.textShare = `Fiz ${this.points} no Country Game!\n\nMeu resultado foi:\nÁfrica: ${this.fromAfrica} países\nAmérica: ${this.fromAmerica} países\nÁsia: ${this.fromAsia} países\nEuropa: ${this.fromEurope} países\nOceania: ${this.fromOceania} países\n\nJogue também em https://country-game-kappa.vercel.app`
+        this.textShare = `Fiz ${this.points} pontos no Country Game!\n\nMeu resultado foi:\nÁfrica: ${this.fromAfrica} países\nAmérica: ${this.fromAmerica} países\nÁsia: ${this.fromAsia} países\nEuropa: ${this.fromEurope} países\nOceania: ${this.fromOceania} países\n\nJogue também em https://country-game-kappa.vercel.app`
         this.statusVisibility = true;
         this.begin()
       }
