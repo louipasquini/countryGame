@@ -32,6 +32,7 @@ export class GameComponent implements OnInit, OnChanges {
   fromAsia:number = 0;
   fromEurope:number = 0;
   fromOceania:number = 0;
+  textShare:string = ``
 
   closeTab = ():void => {
     this.statusVisibility = false;
@@ -50,6 +51,16 @@ export class GameComponent implements OnInit, OnChanges {
     clearInterval(this.con);
   }
 
+  copyText() {
+    const inputElement = document.createElement('textarea');
+    inputElement.value = this.textShare;
+    document.body.appendChild(inputElement);
+    inputElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(inputElement);
+    alert('Texto copiado para a área de transferência.');
+  }
+
   begin = ():void => {
     this.seconds = 30
     this.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -64,6 +75,7 @@ export class GameComponent implements OnInit, OnChanges {
       if (this.alphabet.length > 1){
         this.alphabet.shift()
       } else {
+        this.textShare = `Fiz ${this.points} no Country Game!\n\nMeu resultado foi:\nÁfrica: ${this.fromAfrica} países\nAmérica: ${this.fromAmerica} países\nÁsia: ${this.fromAsia} países\nEuropa: ${this.fromEurope} países\nOceania: ${this.fromOceania} países\n\nJogue também em https://country-game-kappa.vercel.app`
         this.statusVisibility = true;
         this.begin()
       }
