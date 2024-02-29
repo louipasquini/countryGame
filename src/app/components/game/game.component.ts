@@ -54,6 +54,7 @@ export class GameComponent implements OnInit, OnChanges {
     this.seconds = 30
     this.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     this.isStarted = false;
+    this.correctCountries = []
     this.pause()
   }
 
