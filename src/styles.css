@@ -4,3 +4,15 @@
     background-color: #171D1C;
     font-family: "Poppins", sans-serif;
 }
+
+::-webkit-scrollbar {
+    width: 1px;
+  }
+  
+::-webkit-scrollbar-track {
+    background: #171D1C;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #EAF2EF;
+}
