@@ -18,7 +18,7 @@ interface Continentes {
 })
 
 export class GameComponent implements OnInit, OnChanges {
-  alphabet:string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  alphabet:string[] = 'ABCDEFGHIJKLMNOPQRSTUVZ'.split('');
   seconds:number = 30;
   con:any;
   data:Continentes = countriesData;
