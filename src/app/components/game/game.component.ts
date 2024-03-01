@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import answersData from './data/answers.json'
-import countriesData from './data/countries.json'
+import answersData from '../../../assets/data/answers.json'
+import countriesData from '../../../assets/data/countries.json'
 import { CommonModule } from '@angular/common';
 
 interface Continentes {
