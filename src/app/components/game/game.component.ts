@@ -72,6 +72,9 @@ export class GameComponent implements OnInit, OnChanges {
   reset = ():void => {
     if (this.isStarted === true) {
       this.seconds += 30;
+      if (this.seconds >= 90) {
+        this.seconds = 90;
+      }
       if (this.alphabet.length > 1){
         this.alphabet.shift()
       } else {
