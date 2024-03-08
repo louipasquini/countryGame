@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import answersData from '../../../assets/data/answers.json'
 import countriesData from '../../../assets/data/countries.json'
 import { CommonModule } from '@angular/common';
+import { format } from 'date-fns'
 
 interface Continentes {
   [key: string]: string[]
@@ -34,9 +35,22 @@ export class GameComponent implements OnInit, OnChanges {
   fromOceania:number = 0;
   textShare:string = ``
   ranking:any;
+  leaderboardVisibility:boolean = false;
+  sendRank:boolean = false;
+  rankingName:string = '';
+
+  openLeaderboard = ():void => {
+    this.statusVisibility = false;
+    this.leaderboardVisibility = true;
+  }
+
+  closeLeaderboard = ():void => {
+    this.leaderboardVisibility = false
+  }
 
   closeTab = ():void => {
     this.statusVisibility = false;
+    console.log(this.ranking)
   }
 
   start = ():void => {
@@ -93,6 +107,39 @@ export class GameComponent implements OnInit, OnChanges {
     }
   }
 
+  sendRanking = (name:string,points:number):void => {
+    fetch('https://147c423c-56c4-4e20-9296-30315e72772e-00-ncn7an2t808f.riker.replit.dev/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name:name,points:points}) 
+    })
+    .then((res)=>{
+      this.sendRank = false;
+      console.log(this.sendRank)
+      console.log(res)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  }
+
+  send = () => {
+    this.sendRank = true;
+    this.obtainRankingName({value:this.rankingName})
+    this.getApi()
+    console.log(this.sendRank)
+  }
+
+  obtainRankingName = (e:any):void => {
+    let rankingName = e.value.toString()
+    this.rankingName = rankingName
+    if (this.sendRank == true) {
+      this.sendRanking(rankingName,this.points)
+    }
+  }
+
   obtainText = (e:any):void => {
     if (this.isStarted) {
       let word = e.value
@@ -134,7 +181,7 @@ export class GameComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
+  getApi = () => {
     fetch('https://147c423c-56c4-4e20-9296-30315e72772e-00-ncn7an2t808f.riker.replit.dev/')
     .then(res => {
       if (!res.ok) {
@@ -144,10 +191,23 @@ export class GameComponent implements OnInit, OnChanges {
     })
     .then(data => {
       this.ranking = data
+      this.ranking.forEach((item:any) => {
+        item.date = format(item.date, 'dd/MM/yyyy')
+      });
+      this.ranking.sort(function(a:any,b:any) {
+        return a.points > b.points ? -1 : a.points < b.points ? 1 : 0;
+    });
+      if (this.ranking.length > 10) {
+        this.ranking.splice(10);
+      }
     })
     .catch(error => {
       console.error(error)
     })
+  }
+
+  ngOnInit(): void {
+    this.getApi()
   }
 
   ngOnChanges(changes: SimpleChanges): void {

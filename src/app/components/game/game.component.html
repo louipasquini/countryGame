@@ -29,6 +29,26 @@
         <h5>Oceania: {{ fromOceania }}</h5>
         <div (click)="closeTab()">Fechar</div>
         <div (click)="copyText()">Compartilhe</div>
+        <div (click)="openLeaderboard()">Ranking</div>
+        <h5>by Loui Pasquini</h5>
+    </div>
+    <div *ngIf="leaderboardVisibility" class="leaderboard">
+        <h4>Você fez</h4>
+        <h1>{{ points }}</h1>
+        <h4>pontos!</h4>
+        <hr>
+        <div class="ranking">
+            <div>
+                <h5>Nome</h5><h5>Pontos</h5><h5>Data</h5>
+            </div>
+            <div *ngFor="let item of ranking">
+                <h5>{{ item.name }}</h5><h5>{{ item.points }}</h5><h5>{{ item.date }}</h5>
+            </div>
+            <div>
+                <input placeholder="Digite seu nome" (input)="obtainRankingName($event.target)" type="text"><button (click)="send()">Enviar</button>
+            </div>
+        </div>
+        <button (click)="closeLeaderboard()">Fechar</button>
         <h5>by Loui Pasquini</h5>
     </div>
 </div>
