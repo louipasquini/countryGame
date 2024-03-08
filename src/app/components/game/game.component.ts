@@ -42,6 +42,7 @@ export class GameComponent implements OnInit, OnChanges {
   openLeaderboard = ():void => {
     this.statusVisibility = false;
     this.leaderboardVisibility = true;
+    this.getApi()
   }
 
   closeLeaderboard = ():void => {
@@ -117,7 +118,7 @@ export class GameComponent implements OnInit, OnChanges {
     })
     .then((res)=>{
       this.sendRank = false;
-      console.log(this.sendRank)
+      this.getApi()
       console.log(res)
     })
     .catch((error) => {
@@ -128,7 +129,6 @@ export class GameComponent implements OnInit, OnChanges {
   send = () => {
     this.sendRank = true;
     this.obtainRankingName({value:this.rankingName})
-    this.getApi()
     console.log(this.sendRank)
   }
 
