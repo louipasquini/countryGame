@@ -116,7 +116,7 @@
 
 .points {
     width: 20rem;
-    height: 35rem;
+    height: 40rem;
     background-color: #EAF2EF;
     position: absolute;
     top: 4rem;
@@ -154,7 +154,65 @@
     color: #171D1C;
 }
 
-.points div {
+.leaderboard {
+    width: 50rem;
+    height: 40rem;
+    background-color: #EAF2EF;
+    position: absolute;
+    top: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    box-shadow: 4px 4px 8px #07080841;
+}
+
+.leaderboard hr {
+    width: 60%;
+    margin: 15px;
+    color: #171D1C;
+}
+
+.leaderboard h4 {
+    font-size: 2rem;
+    color: #6E7E85;
+    background-color: transparent;
+    margin: 0;
+}
+
+.leaderboard h5 {
+    margin: 5px;
+    background-color: transparent;
+    color: #6E7E85;
+}
+
+.leaderboard h1 {
+    font-size: 5rem;
+    margin: -25px;
+    background-color: transparent;
+    color: #171D1C;
+}
+
+.leaderboard .ranking {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    flex-direction: column;
+}
+
+.leaderboard .ranking div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    flex-direction: row;
+}
+
+.botao {
     width: 8rem;
     height: 3rem;
     margin-top: 1rem;
@@ -172,7 +230,34 @@
     cursor: pointer;
 }
 
-.points div:hover {
+.botao:hover {
+    background-color: #52AA5E;
+    box-shadow: 4px 4px 6px #07080841;
+}
+
+.leaderboard .ranking div h5 {
+    width: 15%;
+}
+
+.leaderboard button {
+    width: 8rem;
+    height: 3rem;
+    margin-top: 1rem;
+    background-color: #FF7E6B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    border-radius: 8rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    box-shadow: 2px 2px 2px #07080841;
+    transition: all ease-in-out 0.4s;
+    cursor: pointer;
+}
+
+.leaderboard button:hover {
     background-color: #52AA5E;
     box-shadow: 4px 4px 6px #07080841;
 }
