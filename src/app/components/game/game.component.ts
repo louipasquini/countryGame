@@ -33,6 +33,7 @@ export class GameComponent implements OnInit, OnChanges {
   fromEurope:number = 0;
   fromOceania:number = 0;
   textShare:string = ``
+  ranking:any;
 
   closeTab = ():void => {
     this.statusVisibility = false;
@@ -134,7 +135,19 @@ export class GameComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
+    fetch('https://147c423c-56c4-4e20-9296-30315e72772e-00-ncn7an2t808f.riker.replit.dev/')
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Erro');
+      }
+      return res.json()
+    })
+    .then(data => {
+      this.ranking = data
+    })
+    .catch(error => {
+      console.error(error)
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
