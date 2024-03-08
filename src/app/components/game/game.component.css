@@ -156,7 +156,9 @@
 
 .leaderboard {
     width: 20rem;
-    height: 40rem;
+    height: fit-content;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     background-color: #EAF2EF;
     position: absolute;
     top: 4rem;
