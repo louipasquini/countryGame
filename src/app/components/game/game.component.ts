@@ -136,7 +136,9 @@ export class GameComponent implements OnInit, OnChanges {
     let rankingName = e.value.toString()
     this.rankingName = rankingName
     if (this.sendRank == true) {
-      this.sendRanking(rankingName,this.points)
+      let newN = rankingName.split('').splice(0,5).join('')
+      this.rankingName = newN
+      this.sendRanking(this.rankingName,this.points)
     }
   }
 
@@ -197,9 +199,7 @@ export class GameComponent implements OnInit, OnChanges {
       this.ranking.sort(function(a:any,b:any) {
         return a.points > b.points ? -1 : a.points < b.points ? 1 : 0;
     });
-      if (this.ranking.length > 10) {
-        this.ranking.splice(10);
-      }
+      this.ranking = this.ranking.splice(0,10);
     })
     .catch(error => {
       console.error(error)

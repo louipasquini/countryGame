@@ -44,10 +44,9 @@
             <div *ngFor="let item of ranking">
                 <h5>{{ item.name }}</h5><h5>{{ item.points }}</h5><h5>{{ item.date }}</h5>
             </div>
-            <div>
-                <input class="answer" placeholder="Digite seu nome" (input)="obtainRankingName($event.target)" type="text"><button class="botao" (click)="send()">Enviar</button>
-            </div>
+            <input class="answer" placeholder="Digite seu nome" (input)="obtainRankingName($event.target)" type="text">
         </div>
+        <button class="botao" (click)="send()">Enviar</button>
         <button class="botao" (click)="closeLeaderboard()">Fechar</button>
         <h5>by Loui Pasquini</h5>
     </div>

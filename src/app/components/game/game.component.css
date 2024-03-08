@@ -155,7 +155,7 @@
 }
 
 .leaderboard {
-    width: 50rem;
+    width: 20rem;
     height: 40rem;
     background-color: #EAF2EF;
     position: absolute;
@@ -195,16 +195,16 @@
 }
 
 .leaderboard .ranking {
-    width: 60%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: transparent;
     flex-direction: column;
 }
 
 .leaderboard .ranking div {
-    width: 100%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -236,7 +236,7 @@
 }
 
 .leaderboard .ranking div h5 {
-    width: 15%;
+    width: 30%;
 }
 
 .leaderboard button {
