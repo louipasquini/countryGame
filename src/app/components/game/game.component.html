@@ -1,53 +1,92 @@
-<div class="game-container">
-    <h1 class="title">Country Game</h1>
-    <div class="cron">
-        <button (click)="start()" class="play">
-            <i class="bi bi-play-fill"></i>
-        </button>
-        <h1 class="cronos">
-            {{ seconds }}
-        </h1>
-        <button (click)="reset()" class="skip">
-            <i class="bi bi-skip-forward-fill"></i>
-        </button>
-    </div>
-    <div class="answers">
-        <input placeholder="Países que começam com {{ this.alphabet[0] }}" (input)="obtainText($event.target)" type="text" class="answer">
-        <h3 *ngFor="let item of correctCountries" class="output">
-            {{ item }}
-        </h3>
-    </div>
-    <div *ngIf="statusVisibility" class="points">
-        <h4>Você fez</h4>
-        <h1>{{ points }}</h1>
-        <h4>pontos!</h4>
-        <hr>
-        <h5>África: {{ fromAfrica }}</h5>
-        <h5>América: {{ fromAmerica }}</h5>
-        <h5>Ásia: {{ fromAsia }}</h5>
-        <h5>Europa: {{ fromEurope }}</h5>
-        <h5>Oceania: {{ fromOceania }}</h5>
-        <div class="botao" (click)="closeTab()">Fechar</div>
-        <div class="botao" (click)="copyText()">Compartilhe</div>
-        <div class="botao" (click)="openLeaderboard()">Ranking</div>
-        <h5>by Loui Pasquini</h5>
-    </div>
-    <div *ngIf="leaderboardVisibility" class="leaderboard">
-        <h4>Você fez</h4>
-        <h1>{{ points }}</h1>
-        <h4>pontos!</h4>
-        <hr>
-        <div class="ranking">
-            <div>
-                <h5>Nome</h5><h5>Pontos</h5><h5>Data</h5>
-            </div>
-            <div *ngFor="let item of ranking">
-                <h5>{{ item.name }}</h5><h5>{{ item.points }}</h5><h5>{{ item.date }}</h5>
-            </div>
-            <input class="answer" placeholder="Digite seu nome" (input)="obtainRankingName($event.target)" type="text">
+<div class="arcade">
+    <div class="cabinet">
+        <div class="hud">
+            <span class="hud-label">Score</span>
+            <span class="hud-score" [class.pop]="scorePulse">{{ points }}</span>
         </div>
-        <button class="botao" (click)="send()">Enviar</button>
-        <button class="botao" (click)="closeLeaderboard()">Fechar</button>
-        <h5>by Loui Pasquini</h5>
+
+        <header class="header">
+            <h1 class="title">Country<br>Game</h1>
+            <p class="subtitle">Aperte play e digite países da letra em destaque antes que o tempo acabe.</p>
+        </header>
+
+        <div class="cron">
+            <button (click)="start()" class="pxbtn pxbtn--play" aria-label="Iniciar">
+                <span class="icon-play"></span>
+            </button>
+            <div class="clock" [class.urgent]="isUrgent">
+                <span class="cronos">{{ seconds }}</span>
+            </div>
+            <button (click)="reset()" class="pxbtn pxbtn--skip" aria-label="Pular letra">
+                <span class="icon-skip"></span>
+            </button>
+        </div>
+
+        <div class="rail" aria-hidden="true">
+            <span class="rail-seg" *ngFor="let l of fullAlphabet" [class.done]="isPast(l)" [class.current]="l === alphabet[0]"></span>
+        </div>
+
+        <div class="marquee" [class.pulse]="letterPulse">
+            <span>{{ alphabet[0] }}</span>
+        </div>
+
+        <div class="terminal">
+            <span class="prompt">&gt;</span>
+            <input placeholder="país com {{ alphabet[0] }}..." (input)="obtainText($event.target)" type="text" class="terminal-input" autocomplete="off">
+        </div>
+
+        <div class="inventory">
+            <div class="chip" [ngClass]="'chip--' + continentOf(item)" *ngFor="let item of correctCountries">
+                <span class="chip-dot"></span>{{ item }}
+            </div>
+        </div>
+
+        <footer class="credit">by Loui Pasquini</footer>
+    </div>
+
+    <div *ngIf="statusVisibility" class="overlay">
+        <div class="panel panel--score">
+            <p class="panel-kicker">Game Over</p>
+            <p class="panel-score">{{ points }}</p>
+            <p class="panel-caption">pontos</p>
+            <hr>
+            <div class="tally">
+                <div class="tally-row"><span class="dot dot--africa"></span><span class="tally-label">África</span><span class="tally-val">{{ fromAfrica }}</span></div>
+                <div class="tally-row"><span class="dot dot--america"></span><span class="tally-label">América</span><span class="tally-val">{{ fromAmerica }}</span></div>
+                <div class="tally-row"><span class="dot dot--asia"></span><span class="tally-label">Ásia</span><span class="tally-val">{{ fromAsia }}</span></div>
+                <div class="tally-row"><span class="dot dot--europa"></span><span class="tally-label">Europa</span><span class="tally-val">{{ fromEurope }}</span></div>
+                <div class="tally-row"><span class="dot dot--oceania"></span><span class="tally-label">Oceania</span><span class="tally-val">{{ fromOceania }}</span></div>
+            </div>
+            <div class="actions">
+                <button class="pxbtn pxbtn--ghost" (click)="closeTab()">Fechar</button>
+                <button class="pxbtn pxbtn--gold" (click)="copyText()">Compartilhar</button>
+                <button class="pxbtn pxbtn--green" (click)="openLeaderboard()">Ranking</button>
+            </div>
+            <p class="credit">by Loui Pasquini</p>
+        </div>
+    </div>
+
+    <div *ngIf="leaderboardVisibility" class="overlay">
+        <div class="panel panel--board">
+            <p class="panel-kicker">High Scores</p>
+            <p class="panel-score">{{ points }}</p>
+            <p class="panel-caption">seu resultado</p>
+            <hr>
+            <div class="board">
+                <div class="board-row board-row--head">
+                    <span>#</span><span>Nome</span><span>Pts</span><span>Data</span>
+                </div>
+                <div class="board-row" *ngFor="let item of ranking; let i = index">
+                    <span>{{ i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + 'º' }}</span>
+                    <span class="board-name">{{ item.name }}</span><span>{{ item.points }}</span><span>{{ item.date }}</span>
+                </div>
+            </div>
+            <input class="terminal-input terminal-input--name" placeholder="Digite seu nome" (input)="obtainRankingName($event.target)" type="text">
+            <div class="actions">
+                <button class="pxbtn pxbtn--gold" (click)="send()">Enviar</button>
+                <button class="pxbtn pxbtn--ghost" (click)="closeLeaderboard()">Fechar</button>
+            </div>
+            <p class="credit">by Loui Pasquini</p>
+        </div>
     </div>
 </div>

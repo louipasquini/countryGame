@@ -20,6 +20,7 @@ interface Continentes {
 
 export class GameComponent implements OnInit, OnChanges {
   alphabet:string[] = 'ABCDEFGHIJKLMNOPQRSTUVZ'.split('');
+  readonly fullAlphabet:string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   seconds:number = 30;
   con:any;
   data:Continentes = countriesData;
@@ -38,6 +39,37 @@ export class GameComponent implements OnInit, OnChanges {
   leaderboardVisibility:boolean = false;
   sendRank:boolean = false;
   rankingName:string = '';
+  letterPulse:boolean = false;
+  scorePulse:boolean = false;
+
+  get isUrgent():boolean {
+    return this.isStarted && this.seconds <= 10;
+  }
+
+  isPast = (letter:string):boolean => {
+    return this.fullAlphabet.indexOf(letter) < this.fullAlphabet.indexOf(this.alphabet[0]);
+  }
+
+  continentOf = (country:string):string => {
+    for (let continent in this.data) {
+      if (this.data[continent].includes(country)) {
+        return continent.toLowerCase();
+      }
+    }
+    return '';
+  }
+
+  pulseScore = ():void => {
+    this.scorePulse = false;
+    setTimeout(() => this.scorePulse = true, 0);
+    setTimeout(() => this.scorePulse = false, 300);
+  }
+
+  pulseLetter = ():void => {
+    this.letterPulse = false;
+    setTimeout(() => this.letterPulse = true, 0);
+    setTimeout(() => this.letterPulse = false, 400);
+  }
 
   openLeaderboard = ():void => {
     this.statusVisibility = false;
@@ -93,6 +125,7 @@ export class GameComponent implements OnInit, OnChanges {
       }
       if (this.alphabet.length > 1){
         this.alphabet.shift()
+        this.pulseLetter()
       } else {
         this.textShare = `Fiz ${this.points} pontos no Country Game!\n\nMeu resultado foi:\nÁfrica: ${this.fromAfrica} países\nAmérica: ${this.fromAmerica} países\nÁsia: ${this.fromAsia} países\nEuropa: ${this.fromEurope} países\nOceania: ${this.fromOceania} países\n\nJogue também em https://country-game-kappa.vercel.app`
         this.statusVisibility = true;
@@ -157,6 +190,7 @@ export class GameComponent implements OnInit, OnChanges {
           this.correctCountries.push(this.data[continent][this.answers[continent].indexOf(word)])
           e.value = ''
           this.points += 1
+          this.pulseScore()
           switch (continent) {
             case "Africa":
               this.fromAfrica += 1
